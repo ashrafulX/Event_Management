@@ -16,6 +16,11 @@ def dashboard(request):
 
     """STATS ER MODDE COUNT  BER KORTE HOBE"""
 
+    stats=Event.objects.aggregate(
+        total_events=Count('id'),
+        upcoming=Count('id',filter=Q(date__gt=timezone.now())),
+        past=Count('id',filter=Q(date__lt=timezone.now()))
+    )
 
     participant_stats = Participant.objects.aggregate(total_participants_count=Count('id'))
     total_participants = participant_stats['total_participants_count']
