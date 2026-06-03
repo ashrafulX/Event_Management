@@ -94,34 +94,18 @@ npm install
 python manage.py makemigrations
 python manage.py migrate
 python populate_db.py
-# One-time production build
+
+**# One-time production build**
 npm run build:tailwind
 
-# Or watch for changes during active development
+**# Or watch for changes during active development**
 npm run watch:tailwind
 python manage.py runserver
 
 
 
-🎉 Open your browser and go to http://127.0.0.1:8000/
+**🎉 Open your browser and go to http://127.0.0.1:8000/**
 
-
-
-
-Event-Management-System/
-├── events/                 # Main Django App (Models, Views, URLs)
-│   ├── templates/          # HTML Templates (namespaced)
-│   └── migrations/         # Database migrations
-├── static/                 # CSS, JS, and Images
-│   ├── css/
-│   │   ├── tailwind.css    # Tailwind input
-│   │   └── output.css      # Compiled CSS
-│   └── images/
-├── core/                   # Django Project Settings
-├── populate_db.py          # Script for generating dummy data
-├── package.json            # Node/Tailwind scripts
-├── requirements.txt        # Python dependencies
-└── .env                    # Environment variables
 
 
 
