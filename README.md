@@ -69,7 +69,7 @@ Most event platforms are either too simple or too bloated. EventMaster hits the 
 
 ### Prerequisites
 Ensure the following are installed on your machine:
-* [Python >= 3.x](https://www.python.org/downloads/)
+* [Python >= 3.14.5](https://www.python.org/downloads/)
 * [Node.js & npm](https://nodejs.org/) (Required for Tailwind CSS compilation)
 * [Git](https://git-scm.com/)
 * *Optional:* PostgreSQL for production-like local setup
