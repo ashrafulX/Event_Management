@@ -54,14 +54,13 @@ Most event platforms are either too simple or too bloated. EventMaster hits the 
 
 | Layer | Technology |
 | :--- | :--- |
-| **Language** | Python 3.x |
+| **Language** | Python 3.14.5 |
 | **Framework** | Django 6.0.3 |
 | **Database (Local)** | SQLite |
 | **Database (Production)** | PostgreSQL |
-| **Frontend** | HTML5, Tailwind CSS (PostCSS), FontAwesome |
+| **Frontend** | HTML5, Tailwind CSS , FontAwesome |
 | **CSS Build Tool** | Node.js + npm |
 | **Config Management** | python-decouple |
-| **WSGI Server** | Gunicorn |
 | **Deployment** | Render.com |
 
 ---
@@ -79,5 +78,51 @@ Ensure the following are installed on your machine:
 
 **Step 1 — Clone the repository**
 ```bash
-git clone [https://github.com/Tanbir-Hasan-247/Event-Management-System.git](https://github.com/Tanbir-Hasan-247/Event-Management-System.git)
-cd Event-Management-System
+git clone https://github.com/ashrafulX/Event_Management
+cd Event_Management
+
+python -m venv venv
+
+# On Windows
+venv\Scripts\activate
+
+# On macOS / Linux
+source venv/bin/activate
+
+pip install -r requirements.txt
+npm install
+python manage.py makemigrations
+python manage.py migrate
+python populate_db.py
+# One-time production build
+npm run build:tailwind
+
+# Or watch for changes during active development
+npm run watch:tailwind
+python manage.py runserver
+
+
+
+🎉 Open your browser and go to http://127.0.0.1:8000/
+
+
+
+
+Event-Management-System/
+├── events/                 # Main Django App (Models, Views, URLs)
+│   ├── templates/          # HTML Templates (namespaced)
+│   └── migrations/         # Database migrations
+├── static/                 # CSS, JS, and Images
+│   ├── css/
+│   │   ├── tailwind.css    # Tailwind input
+│   │   └── output.css      # Compiled CSS
+│   └── images/
+├── core/                   # Django Project Settings
+├── populate_db.py          # Script for generating dummy data
+├── package.json            # Node/Tailwind scripts
+├── requirements.txt        # Python dependencies
+└── .env                    # Environment variables
+
+
+
+
