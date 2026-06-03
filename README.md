@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📅 EventMaster
+# 📅 Event Management
 **A Modern, Role-Based Event Management System**
 
 ![Python](https://img.shields.io/badge/PYTHON-3.x+-blue?style=for-the-badge&logo=python&logoColor=white)
