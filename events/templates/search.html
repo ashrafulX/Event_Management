@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body class="bg-gray-50 py-12 text-black">
+    <div class="max-w-7xl mx-auto px-4 md:px-20 w-full">
+        
+        <div class="mb-8">
+            <h2 class="text-2xl font-black uppercase">Search Results for: "{{ query }}"</h2>
+            <p class="text-sm text-gray-500">Found {{ events.count }} events.</p>
+        </div>
+
+        <div class="grid grid-cjools-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+            {% for event in events %}
+                {% include "event_card.html" %}
+            {% empty %}
+                <p class="text-gray-500 font-bold col-span-full text-center py-12">No events match your query.</p>
+            {% endfor %}
+        </div>
+        
+    </div>
+</body>
+</html>

@@ -20,7 +20,11 @@
                             </div>
                             <div>
                                 <a href="{% url 'update' event.id %}" class="rounded-full hover:text-blue-600 transition-colors">edit</a>
-                                <a href="{% url 'update' event.id %}" class="rounded-full hover:text-blue-600 transition-colors">delete</a>
+
+                                <form action="{% url 'delete' event.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type"submit" class="rounded-full hover:text-blue-600 transition-colors">delete</button>
+                                </form>
                             </div>
                             </div>
 

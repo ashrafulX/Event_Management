@@ -42,6 +42,11 @@ def dashboard(request):
     
     return render(request, 'dashboard.html', context)
 
+def allevent(request):
+    events=Event.objects.order_by('date')
+    return render(request,'allevent.html',{'events':events})
+
+
 
 def create_category(request):
     if request.method=='POST':
@@ -99,7 +104,12 @@ def update(request,id):
     return render(request,'create_event.html',context)
 
 
-
+def delete(request,id):
+    if request.method=="POST":
+        obj=Event.objects.get(id=id)
+        obj.delete()
+        messages.success(request, "Event deleted successfully!")
+    return redirect("all-event")
 
 
 def upcoming(request):
@@ -132,3 +142,17 @@ def past(request):
         'past':past,
     }
     return render(request,'past.html',context)
+
+
+def search(request):
+    query=request.GET.get('q')
+    result=Event.objects.all()
+
+    if query:
+        result=Event.objects.filter(Q(name__icontains=query) | Q(location__icontains=query) | Q(category__name__icontains=query)).distinct()
+    
+    context={
+        'events':result,
+        'query':query
+    }
+    return render(request,'search.html',context)

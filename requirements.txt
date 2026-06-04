@@ -4,3 +4,4 @@ django-debug-toolbar==6.3.0
 Faker==40.19.1
 psycopg2-binary==2.9.12
 sqlparse==0.5.5
+tzdata==2026.2

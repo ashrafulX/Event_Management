@@ -1,5 +1,3 @@
-
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +62,7 @@
             
             <a href="{% url 'past-events' %}" class="hover:text-[#F56529] transition-colors duration-300">Past Event</a>
             <a href="{% url 'upcoming-events' %}" class="hover:text-[#F56529] transition-colors duration-300">Upcoming Event</a>
-            <a href="{% url 'upcoming-events' %}" class="hover:text-[#F56529] transition-colors duration-300">All Event</a>
+            <a href="{% url 'all-event' %}" class="hover:text-[#F56529] transition-colors duration-300">All Event</a>
             <a href="#search-section" class="hover:text-[#F56529] transition-colors duration-300">Search</a>
             
             <a href="#contact-section" class="px-6 py-2.5 bg-[#F56529] text-white rounded-full hover:bg-white hover:text-black transition-all duration-300 mt-2 md:mt-0 text-center shadow-[0_0_15px_rgba(245,101,41,0.4)]">
@@ -88,9 +86,9 @@
         </div>
 
         <div class="w-full max-w-2xl mt-4 px-8 md:px-0">
-            <form>
-                <input type="text" placeholder="Search Artist, Team, Venue" class="w-full px-6 py-3 md:py-5 rounded-full bg-transparent border border-white text-white placeholder-white/70 outline-none text-sm md:text-base">
-            </form>
+            <form action="{% url 'search' %}" method="GET">
+        <input type="text" name="q" value="{{ request.GET.q|default:'' }}" placeholder="Search Artist, Team, Venue" class="w-full px-6 py-3 md:py-5 rounded-full bg-transparent border border-white text-white placeholder-white/70 outline-none text-sm md:text-base">
+    </form>
         </div>
         
         <div>
