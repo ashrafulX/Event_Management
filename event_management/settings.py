@@ -170,6 +170,7 @@ SECRET_KEY = 'django-insecure-%2pm#rdmgf#2hxgq)7%##&&x%a%(pdoj@q0jfssm!rj(j(iozt
 
 # RENDER এনভায়রনমেন্ট ভেরিয়েবল থাকলে ডাইনামিকালি DEBUG False হয়ে যাবে
 DEBUG = 'RENDER' not in os.environ  
+CSRF_TRUSTED_ORIGINS=['https://*.onrender.com']
 
 ALLOWED_HOSTS = ['*']
 
