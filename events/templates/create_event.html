@@ -4,80 +4,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Event</title>
+    <title>Create New Event</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <style>
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: #ffffff !important;
+            border: 1px solid #e5e7eb !important;
+            color: #1f2937 !important;
+            border-radius: 0.5rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #DB3B24 !important;
+            box-shadow: 0 0 10px rgba(219, 59, 36, 0.15);
+        }
+        select[multiple] {
+            height: 120px;
+        }
+    </style>
 </head>
-<body>
-    <div>
-        <div>
-    {% if messages %}
-    {% for message in messages %}
-        <p class="
-            {% if message.tags == 'success' %}
-                bg-green-100 text-green-700
-            {% endif %}
-            p-2 rounded mt-2
-        ">
-            {{ message }}
-        </p>
-    {% endfor %}
-{% endif %}
-</div>
+<body class="bg-gray-50 min-h-screen text-black py-12 flex items-center justify-center">
 
-    <div class="w-1/2 mx-auto mt-8">
-        <form method="POST" class="space-y-6">
-        {% csrf_token %}
-
-        <div>
-            <label class="block mb-2">Name</label>
-            {{ event.name }}
+    <div class="w-full max-w-2xl mx-auto px-4">
+        
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-black tracking-tight uppercase text-gray-900">
+                    Create <span class="text-[#DB3B24]">Event</span>
+                </h1>
+                <p class="text-gray-500 text-xs mt-1">Fill up the details to launch a new spectacular event.</p>
+            </div>
+            <a href="{% url "dashboard" %}" class="text-xs font-bold uppercase tracking-wider text-gray-600 hover:text-[#DB3B24] transition-colors border border-gray-200 px-4 py-2 rounded-full bg-white shadow-sm">
+                ← Dashboard
+            </a>
         </div>
 
-        <div>
-            <label class="block mb-2">Description</label>
-            {{ event.description }}
+        {% if messages %}
+            <div class="mb-6 space-y-2">
+                {% for message in messages %}
+                    <div class="p-4 rounded-xl text-sm font-semibold flex items-center gap-3 shadow-sm 
+                        {% if message.tags == 'success' %} bg-emerald-50 text-emerald-700 border border-emerald-200 {% else %} bg-rose-50 text-rose-700 border border-rose-200 {% endif %}">
+                        <span class="w-2 h-2 rounded-full {% if message.tags == 'success' %} bg-emerald-500 {% else %} bg-rose-500 {% endif %}"></span>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-xl relative overflow-hidden">
+            
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-[#DB3B24]/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            <form method="POST" class="space-y-6 relative z-10">
+                {% csrf_token %}
+
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Event Name</label>
+                    {{ event.name }}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Description</label>
+                    {{ event.description }}
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Date</label>
+                        {{ event.date }}
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Time</label>
+                        {{ event.time }}
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Location / Venue</label>
+                    {{ event.location }}
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Category</label>
+                        {{ event.category }}
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Ticket Price (BDT)</label>
+                        {{ event.ticket }}
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Select Participants</label>
+                    <div class="text-[10px] text-gray-400 mb-1">Hold Ctrl (or Cmd) to select multiple users</div>
+                    {{ event.participants }}
+                </div>
+
+                <div class="pt-2">
+                    <button 
+                        type="submit"
+                        class="w-full py-4 bg-[#DB3B24] text-white rounded-xl font-black uppercase tracking-wider text-sm transition-all duration-300 hover:bg-[#C53725] hover:scale-[1.01] shadow-[0_4px_20px_rgba(219,59,36,0.2)]"
+                    >
+                        Publish Event 🚀
+                    </button>
+                </div>
+
+            </form>
         </div>
         
-        <div>
-            <label class="block mb-2">Date</label>
-            {{ event.date }}
-        </div>
-
-        <div>
-            <label class="block mb-2">Time</label>
-            {{ event.time }}
-        </div>
-
-        <div>
-            <label class="block mb-2">Location</label>
-            {{ event.location }}
-        </div>
-
-        <div>
-            <label class="block mb-2">category</label>
-            {{ event.category }}
-        </div>
-
-        <div>
-            <label class="block mb-2">participants</label>
-            {{ event.participants }}
-        </div>
-
-        <div>
-            <label class="block mb-2">Price</label>
-            {{ event.ticket }}
-        </div>
-
-
-        <button 
-            type="submit"
-            class="p-2 bg-rose-600 text-white rounded-md"
-        >
-            Submit
-        </button>
-
-    </form>
     </div>
-    </div>
+
 </body>
 </html>

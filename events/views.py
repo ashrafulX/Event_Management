@@ -84,5 +84,51 @@ def create_event(request):
 
 
 def update(request,id):
-    pass
-#     obj=Event.objects.get(id=id)
+    obj=Event.objects.get(id=id)
+    event=EventModelForm(instance=obj)
+
+    if request.method=='POST':
+        event=EventModelForm(request.POST,instance=obj)
+        if event.is_valid():
+            event.save()
+            messages.success(request,'Event Update Succesfully')
+            return redirect('create-event')
+        else:
+            print(event.errors)
+    context={'event':event}
+    return render(request,'create_event.html',context)
+
+
+
+
+
+def upcoming(request):
+    today=timezone.now().date()
+    stats = Event.objects.aggregate(
+        total_events=Count('id'),
+        upcoming=Count('id', filter=Q(date__gt=today)),
+        past=Count('id', filter=Q(date__lt=today))
+    )
+    participant_stats = Participant.objects.aggregate(total_participants_count=Count('id'))
+    total_participants = participant_stats['total_participants_count']
+    
+    upcoming_events = Event.objects.filter(date__gt=today).order_by('date')
+    
+    context = {
+        'events': upcoming_events,
+        'total_participants': total_participants,
+        'total_events': stats['total_events'],
+        'upcoming': stats['upcoming'],
+        'past': stats['past']
+    }
+    return render(request, 'upcoming.html', context)
+
+
+def past(request):
+    past=Event.objects.aggregate(past=Count('id',filter=Q(date__lt=timezone.now().date())))['past']
+    past_events = Event.objects.filter(date__lt=timezone.now().date()).order_by('date')
+    context={
+        'events':past_events,
+        'past':past,
+    }
+    return render(request,'past.html',context)

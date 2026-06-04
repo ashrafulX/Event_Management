@@ -15,7 +15,7 @@ class Participant(models.Model):
     email=models.EmailField()
     
     def __str__(self):
-        return f"{self.name} + {self.email}"
+        return f"{self.name}"
 
 class Event(models.Model):
     name=models.CharField(max_length=150,null=False)

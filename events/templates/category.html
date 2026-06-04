@@ -7,44 +7,57 @@
     <title>Category</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
-<body>
-    <div>
-    {% if messages %}
-    {% for message in messages %}
-        <p class="
-            {% if message.tags == 'success' %}
-                bg-green-100 text-green-700
-            {% endif %}
-            p-2 rounded mt-2
-        ">
-            {{ message }}
-        </p>
-    {% endfor %}
-{% endif %}
-</div>
-
-    <div class="w-1/2 mx-auto mt-8">
-        <form method="POST" class="space-y-6">
-        {% csrf_token %}
-
-        <div>
-            <label class="block mb-2">Name</label>
-            {{ formss.name }}
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center p-4 antialiased">
+    
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-8 transition-all duration-300 hover:shadow-2xl relative">
+        
+        <div class="absolute top-6 left-8">
+            <a href="{% url 'dashboard' %}" class="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-rose-600 transition-colors">
+                ← Dashboard
+            </a>
         </div>
 
-        <div>
-            <label class="block mb-2">Description</label>
-            {{ formss.description }}
+        <div class="mb-8 text-center mt-6">
+            <h2 class="text-3xl font-black text-black uppercase tracking-tight">Create Category</h2>
+            <p class="text-gray-400 text-xs font-medium mt-1">Add a new segment for your upcoming events</p>
         </div>
 
-        <button 
-            type="submit"
-            class="p-2 bg-rose-600 text-white rounded-md"
-        >
-            Submit
-        </button>
+        {% if messages %}
+            <div class="mb-6 space-y-2">
+                {% for message in messages %}
+                    <div class="p-4 rounded-xl text-sm font-semibold flex items-center gap-3 border {% if message.tags == 'success' %} bg-green-50 text-green-700 border-green-200 {% else %} bg-red-50 text-red-700 border-red-200 {% endif %}">
+                        <span class="w-2 h-2 rounded-full {% if message.tags == 'success' %} bg-green-500 {% else %} bg-red-500 {% endif %}"></span>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-    </form>
+        <form method="POST" class="space-y-5">
+            {% csrf_token %}
+
+            <div class="flex flex-col gap-1.5">
+                <label class="text-xs font-black uppercase tracking-widest text-gray-500">Category Name</label>
+                <div class="relative">
+                    {{ formss.name }}
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+                <label class="text-xs font-black uppercase tracking-widest text-gray-500">Description</label>
+                <div class="relative">
+                    {{ formss.description }}
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button type="submit" class="w-full py-3 bg-rose-600 text-white rounded-xl font-black text-xs uppercase tracking-widest transition-all duration-300 hover:bg-rose-700 shadow-md shadow-rose-600/20 active:scale-[0.98]">
+                    Create Category
+                </button>
+            </div>
+        </form>
+
     </div>
+
 </body>
 </html>
