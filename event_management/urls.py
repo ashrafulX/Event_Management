@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', dashboard, name='dashboard'),
     path('events/', include('events.urls')),
+    path('users/',include('users.urls')),
 ]
 
 if settings.DEBUG:

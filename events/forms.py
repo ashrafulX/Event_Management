@@ -3,26 +3,24 @@ from django import forms
 from events.models import Category,Participant, Event
 
 class styleMixin:
+    default_design = "w-full mt-2 mx-2 my-2 border-2 border-gray-100 rounded-lg focus:border-red-600"
 
-    default_design="w-full mt-2 mx-2 my-2 border-2 border-gray-100 rounded-lg focus:border-red-600"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_styles()
 
-    def StyleApply(self):
+    def apply_styles(self):
         for field_name, field in self.fields.items():
-            if isinstance(field.widget,forms.TextInput):
-                field.widget.attrs.update({
-                    'class':self.default_design,
-                    'placeholder':f"Enter {field.label.lower()}"
-                }) 
-            elif isinstance(field.widget,forms.Textarea):
-                field.widget.attrs.update({
-                    'class':self.default_design,
-                    'placeholder':f"Enter {field.label.lower()}"
-                })
-            else:
-                field.widget.attrs.update({
-                    'class':self.default_design,
-                    'placeholder':f"Enter {field.lablel.lower()}"
-                })
+            label_text = field.label or field_name.replace('_', ' ')
+            placeholder_text = f"Enter {label_text.lower()}"
+
+            existing_classes = field.widget.attrs.get('class', '')
+            new_classes = f"{existing_classes} {self.default_design}".strip()
+
+            field.widget.attrs.update({
+                'class': new_classes,
+                'placeholder': placeholder_text
+            })
 
 
 class CategoryModelForm(styleMixin,forms.ModelForm):
@@ -31,10 +29,6 @@ class CategoryModelForm(styleMixin,forms.ModelForm):
         fields=['name','description']
 
 
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,**kwargs)
-        self.StyleApply()
-        
 
 class ParticipantModelForm(styleMixin,forms.ModelForm):
     
@@ -42,9 +36,6 @@ class ParticipantModelForm(styleMixin,forms.ModelForm):
         model=Participant
         fields=['name','email']
 
-    def __init___(self,*args,**kwargs):
-        super().__init__(*args,**kwargs)
-        self.StyleApply()
 
 class EventModelForm(styleMixin,forms.ModelForm):
     class Meta:
@@ -56,6 +47,4 @@ class EventModelForm(styleMixin,forms.ModelForm):
             'time': forms.TimeInput(attrs={'type': 'time'}),
             'participants': forms.CheckboxSelectMultiple(),
             }
-        def __init__(self, *args,**kwargs):
-            super().__init__(*args,**kwargs)
-            self.StyleApply()
+        
