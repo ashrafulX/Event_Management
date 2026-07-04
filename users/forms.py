@@ -1,6 +1,6 @@
 from django  import forms
 import re
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
 from events.forms import styleMixin
 
@@ -19,7 +19,7 @@ class RegisterForm(styleMixin,UserCreationForm):
         
         return email
     
-    def clean_password(self):
+    def clean_password1(self):
         password=self.cleaned_data.get('password1')
         errors=[]
         if len(password) < 8:
@@ -46,4 +46,17 @@ class RegisterForm(styleMixin,UserCreationForm):
             raise forms.ValidationError('Password Did not Same. Both Password Must be Same')
         return cleaned_data
 
+
+class login_form(styleMixin,AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["username"].widget.attrs.update({
+            "class": "w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200",
+            "placeholder": "Enter your username",
+        })
+
+        self.fields["password"].widget.attrs.update({
+            "class": "w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200",
+            "placeholder": "Enter your password",
+        })
 
