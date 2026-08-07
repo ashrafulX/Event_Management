@@ -1,35 +1,40 @@
-
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>All Event</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}" />
-  </head>
-  <body>
-    <div
-      class="px-3 py-2 text-white bg-rose-600 rounded-md shadow-sm transition-transform hover:scale-105 mt-1 mb-3">
-      <a
-        href="{% url 'dashboard' %}"
-        class="font-bold uppercase tracking-wider text-sm block text-center">HOME</a>
-    </div>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col">
+    
+    {% include "index/nav.html" %}
 
-    <div class="mt-4 mb-4 w-full">
-      {% if messages %} {% for message in messages %}
-      <div
-        class="p-4 rounded-xl text-sm font-semibold flex items-center gap-3 border transition-all duration-300 {% if message.tags == 'success' %} bg-green-50 text-green-700 border-green-200 shadow-sm shadow-green-600/5 {% elif message.tags == 'error' %} bg-red-50 text-red-700 border-red-200 shadow-sm shadow-red-600/5 {% else %} bg-blue-50 text-blue-700 border-blue-200 shadow-sm shadow-blue-600/5 {% endif %}">
-        <span
-          class="w-2 h-2 rounded-full animate-pulse {% if message.tags == 'success' %} bg-green-500 {% elif message.tags == 'error' %} bg-red-500 {% else %} bg-blue-500 {% endif %}"></span>
-        {{ message }}
-      </div>
-      {% endfor %} {% endif %}
-    </div>
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start justify-items-center sm:justify-items-start"
-    >
-      {% for event in events %} {% include "event_card.html" %} {% endfor %}
-    </div>
-  </body>
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-20 w-full mt-28 mb-16">
+        
+        <!-- Messages Section -->
+        {% if messages %}
+        <div class="mb-8 w-full flex flex-col gap-3">
+            {% for message in messages %}
+            <div class="p-4 rounded-xl text-sm font-semibold flex items-center gap-3 border transition-all duration-300 {% if message.tags == 'success' %} bg-green-50 text-green-700 border-green-200 shadow-sm shadow-green-600/5 {% elif message.tags == 'error' %} bg-red-50 text-red-700 border-red-200 shadow-sm shadow-red-600/5 {% else %} bg-blue-50 text-blue-700 border-blue-200 shadow-sm shadow-blue-600/5 {% endif %}">
+                <span class="w-2 h-2 rounded-full animate-pulse {% if message.tags == 'success' %} bg-green-500 {% elif message.tags == 'error' %} bg-red-500 {% else %} bg-blue-500 {% endif %}"></span>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+            {% for event in events %} 
+                {% include "event_card.html" %} 
+            {% empty %}
+                <div class="col-span-full py-16 text-center">
+                    <p class="text-gray-500 text-lg font-semibold">No events are available at this time.</p>
+                </div>
+            {% endfor %}
+        </div>
+        
+    </main>
+</body>
 </html>

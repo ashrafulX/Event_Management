@@ -1,25 +1,50 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>upcoming</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
-  </head>
-  <body>
-    <div
-      class="px-3 py-2 text-white bg-rose-600 rounded-md shadow-sm transition-transform hover:scale-105 mt-1 mb-3">
-      <a
-        href="{% url 'dashboard' %}"
-        class="font-bold uppercase tracking-wider text-sm block text-center"
-        >HOME</a>
-    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Events</title>
 
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start justify-items-center sm:justify-items-start">
-      {% for event in events %} {% include "event_card.html" %} {% endfor %}
-    </div>
-    
-  </body>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+
+<body class="bg-gray-100">
+
+    {% include "index/nav.html" %}
+
+    <!-- Main Container -->
+    <main class="w-full pt-28 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Grid -->
+            <div class="grid
+                        grid-cols-1
+                        sm:grid-cols-2
+                        lg:grid-cols-3
+                        xl:grid-cols-4
+                        gap-8
+                        place-items-center">
+
+                {% for event in events %}
+                    {% include "event_card.html" %}
+                {% empty %}
+
+                <div class="col-span-full flex flex-col items-center justify-center py-24">
+                    <h2 class="text-3xl font-bold text-gray-700">
+                        No Events Found
+                    </h2>
+
+                    <p class="text-gray-500 mt-3">
+                        There are currently no events available.
+                    </p>
+                </div>
+
+                {% endfor %}
+            </div>
+
+        </div>
+    </main>
+
+</body>
 </html>

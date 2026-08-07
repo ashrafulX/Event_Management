@@ -1,4 +1,4 @@
-
+.env
 migrations/
 __init__/
 db.sqlite3

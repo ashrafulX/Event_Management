@@ -9,13 +9,13 @@ from django.db.models import Count
 from .models import Event, Participant
 from django.db.models import Count, Q
 from django.utils import timezone
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
+
 def dashboard(request):
-
     today=timezone.now().date()
-
-
     """STATS ER MODDE COUNT  BER KORTE HOBE"""
-
     stats=Event.objects.aggregate(
         total_events=Count('id'),
         upcoming=Count('id',filter=Q(date__gt=timezone.now())),
@@ -42,9 +42,22 @@ def dashboard(request):
     
     return render(request, 'dashboard.html', context)
 
+
+
 def allevent(request):
     events=Event.objects.order_by('date')
     return render(request,'allevent.html',{'events':events})
+
+
+
+class Allevent(ListView):
+    model=Event
+    context_object_name='events'
+    template_name='allevent.html'
+    def get_queryset(self):
+        queryset=Event.objects.order_by('date')
+        return queryset
+
 
 
 
@@ -76,6 +89,7 @@ def create_participant(request):
 
 def create_event(request):
     event=EventModelForm()
+
     if request.method=='POST':
         event=EventModelForm(request.POST)
         if event.is_valid():
@@ -84,9 +98,33 @@ def create_event(request):
             return redirect('create-event')
         else:
             print(event.errors)
+
     context={'event':event}
     return render(request,'create_event.html',context)
 
+"""Using CBV """
+class CreateEvent(LoginRequiredMixin,View):
+    template_name='create_event.html'
+    login_url = 'sign-in'
+    def get(self,request,*args,**kwargs):
+        context={
+            'event':EventModelForm()
+        }
+        return render(request,self.template_name,context)
+
+    def post(self,request,*args,**kwargs):
+        event=EventModelForm(request.POST)
+        if event.is_valid():
+            event.save()
+            messages.success(request,'Event Create Succesfullly')
+            return redirect('create-event')
+        else:
+            print(event.errors)
+
+        context=context={
+                    'event':EventModelForm(request.POST)
+                }
+        return render(request,self.template_name,context)
 
 def update(request,id):
     obj=Event.objects.get(id=id)
@@ -121,7 +159,6 @@ def upcoming(request):
     )
     participant_stats = Participant.objects.aggregate(total_participants_count=Count('id'))
     total_participants = participant_stats['total_participants_count']
-    
     upcoming_events = Event.objects.filter(date__gt=today).order_by('date')
     
     context = {
@@ -133,6 +170,29 @@ def upcoming(request):
     }
     return render(request, 'upcoming.html', context)
 
+class Upcoming(ListView):
+    model = Event
+    template_name = 'upcoming.html'
+    context_object_name = 'events'
+
+    def get_queryset(self):
+        self.today = timezone.now().date()
+        return Event.objects.filter(date__gt=self.today).order_by('date')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        stats = Event.objects.aggregate(
+            total_events=Count('id'),
+            upcoming=Count('id', filter=Q(date__gt=self.today)),
+            past=Count('id', filter=Q(date__lt=self.today))
+        )
+
+        context['total_participants'] = Participant.objects.count()
+        context.update(stats)
+
+        return context
+        
 
 def past(request):
     past=Event.objects.aggregate(past=Count('id',filter=Q(date__lt=timezone.now().date())))['past']

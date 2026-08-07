@@ -17,12 +17,12 @@
                         <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
                     </svg>
                 </span>
-                <span>info@ashraf452b.com</span>
+                <span>ashrafulwho@gmail.com</span>
             </div>
         </div>
         {% if user.is_authenticated %}
         <div class='flex gap-6 text-white text-sm'>
-        <span>{{user}}</span>
+        <a href="{% url "profile" %}"><span>{{user}}</span></a>
         <span>
             <form action="{% url "logout" %}" method='POST'>
                 {% csrf_token %}
@@ -46,7 +46,7 @@
         
         <div class="text-white">
             <h1 class="text-3xl md:text-4xl font-black tracking-widest uppercase">
-                EVENT<span class="text-[#F56529]">.</span>
+                <a href="{% url "dashboard" %}">EVENT<span class="text-[#F56529]">.</span></a>
             </h1>
         </div>
         
