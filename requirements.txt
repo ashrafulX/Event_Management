@@ -5,7 +5,9 @@ django-debug-toolbar==6.3.0
 Faker==40.19.1
 gunicorn==26.0.0
 packaging==26.2
+pillow==12.3.0
 psycopg2-binary==2.9.12
+python-decouple==3.8
 sqlparse==0.5.5
 tzdata==2026.2
 whitenoise==6.12.0

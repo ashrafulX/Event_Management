@@ -5,7 +5,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.models import Group
-
+from users.models import userprofile
 @receiver(post_save,sender=User)
 def activation_mail(sender,instance,created,**kwargs):
     if created:
@@ -32,3 +32,10 @@ def assign_role(sender,instance,created,**kwargs):
         group,created=Group.objects.get_or_create(name='User')
         instance.groups.add(group)
         instance.save()
+
+
+
+@receiver(post_save,sender=User)
+def create_or_update_user_profile(sender,instance,created,**kwargs):
+    if created:
+        userprofile.objects.create(user=instance)

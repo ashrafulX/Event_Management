@@ -216,3 +216,13 @@ def search(request):
         'query':query
     }
     return render(request,'search.html',context)
+
+
+
+
+def category(request):
+    query=Category.objects.all()
+    type=request.GET.get('type',all)
+
+    base=Event.objects.select_related('category')
+    
