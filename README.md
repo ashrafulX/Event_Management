@@ -1,52 +1,38 @@
 <div align="center">
 
-# 📅 Event Management
-**A Modern, Role-Based Event Management System**
+# 📅 Event Management System
 
-![Python](https://img.shields.io/badge/PYTHON-3.x+-blue?style=for-the-badge&logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/DJANGO-6.0.3-092E20?style=for-the-badge&logo=django&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/POSTGRESQL-PRODUCTION-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Tailwind](https://img.shields.io/badge/TAILWIND_CSS-3.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Node](https://img.shields.io/badge/NODE.JS-NPM-339933?style=for-the-badge&logo=node.js&logoColor=white)
+**A Django learning project — built while learning Django from scratch**
+
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-6.0-092E20?style=for-the-badge&logo=django&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Deploy](https://img.shields.io/badge/Deploy-Render.com-46E3B7?style=flat&logo=render&logoColor=white)](#)
-
-[Live Demo](#) · [Report a Bug](#) · [Request a Feature](#)
 
 </div>
 
 ---
 
-## 📖 Table of Contents
-- [About The Project](#-about-the-project)
-- [Key Features](#-key-features)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Environment Variables](#-environment-variables)
-- [Project Structure](#-project-structure)
-- [License](#-license)
+## 🎓 About This Project
+
+This is a **learning project** — I built it while learning the basics of Django (models, forms, class-based & function-based views, authentication, and templating). It's not a polished, production-grade app; it's a record of what I learned along the way, so the code quality and structure improve in some places and are messy in others. Feel free to explore, fork it, or point out things I could do better!
+
+The project itself is a simple **Event Management System** where users can create events, categorize them, add participants, and view stats on a dashboard.
 
 ---
 
-## 🌟 About The Project
+## ✨ Features
 
-**EventMaster** is a production-ready, full-stack event management platform built with Django and styled with Tailwind CSS's modern glassmorphism design language. It brings organizers, participants, and administrators together in one unified, role-aware system.
-
-From creating a tech conference to RSVPing for a local music night, EventMaster handles it all — with automated email notifications, advanced search, and a real-time dashboard that gives every user exactly what they need to see.
-
-**💡 Why EventMaster?**
-Most event platforms are either too simple or too bloated. EventMaster hits the sweet spot — clean role-based access, a beautiful responsive UI, automated workflows, and a one-command deployment pipeline to Render.com.
-
----
-
-## ✨ Key Features
-
-* **🎭 Role-Based Access Control:** Distinct dashboards for Admins, Organizers, and Participants.
-* **🎨 Premium UI/UX:** Built with Tailwind CSS featuring modern glassmorphism and responsive layouts.
-* **🔍 Advanced Search:** Seamlessly search for Artists, Teams, and Venues.
-* **📊 Analytics Dashboard:** Real-time statistics for total events, upcoming schedules, and participant counts.
-* **✉️ Automated Workflows:** Email notifications and seamless ticket generation.
+- **Event CRUD** — create, update, delete, and list events with a category, location, date/time, ticket price, and participants (many-to-many)
+- **Dashboard** — quick stats for total / upcoming / past events and total participants
+- **Upcoming & Past Events** views, plus a **search** feature (search by event name, location, or category)
+- **Custom User Model** with profile picture and bio
+- **Authentication** — sign up, sign in/out, email-based account activation, password reset, and password change
+- **Profile page** — view and edit profile info
+- **Tailwind CSS** for styling (with a `create_category`, `create_participant`, and `create_event` form UI)
+- **Django Admin** for managing data
 
 ---
 
@@ -54,59 +40,160 @@ Most event platforms are either too simple or too bloated. EventMaster hits the 
 
 | Layer | Technology |
 | :--- | :--- |
-| **Language** | Python 3.14.5 |
-| **Framework** | Django 6.0.3 |
-| **Database (Local)** | SQLite |
-| **Database (Production)** | PostgreSQL |
-| **Frontend** | HTML5, Tailwind CSS , FontAwesome |
+| **Language** | Python 3 |
+| **Framework** | Django 6.0.5 |
+| **Database** | PostgreSQL |
+| **Frontend** | HTML5, Tailwind CSS |
 | **CSS Build Tool** | Node.js + npm |
-| **Config Management** | python-decouple |
-| **Deployment** | Render.com |
+| **Config Management** | python-decouple (`.env` file) |
+| **Static Files** | WhiteNoise |
+| **Debugging** | django-debug-toolbar |
+
+---
+
+## 📁 Project Structure
+
+```
+Event_Management/
+├── event_management/   # Project settings, root URLs
+├── events/              # Events app — models, views, forms, templates
+├── users/               # Custom user model, auth views, profile
+├── Core/                # Home page app
+├── static/               # Source static files (CSS, images)
+├── templates/            # Shared/base templates
+├── media/                # User-uploaded files (profile pictures)
+├── manage.py
+├── populate_db.py       # Script to seed the database with sample data
+└── requirements.txt
+```
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-Ensure the following are installed on your machine:
-* [Python >= 3.14.5](https://www.python.org/downloads/)
-* [Node.js & npm](https://nodejs.org/) (Required for Tailwind CSS compilation)
-* [Git](https://git-scm.com/)
-* *Optional:* PostgreSQL for production-like local setup
+
+- [Python 3.x](https://www.python.org/downloads/)
+- [Node.js & npm](https://nodejs.org/) (for Tailwind CSS)
+- [PostgreSQL](https://www.postgresql.org/) running locally
+- [Git](https://git-scm.com/)
 
 ### Installation
 
-**Step 1 — Clone the repository**
+**1. Clone the repository**
 ```bash
-git clone https://github.com/ashrafulX/Event_Management
+git clone https://github.com/ashrafulX/Event_Management.git
 cd Event_Management
+```
 
-python -m venv venv
+**2. Create a virtual environment & activate it**
+```bash
+python -m venv env
 
-# On Windows
-venv\Scripts\activate
+# Windows
+env\Scripts\activate
 
-# On macOS / Linux
-source venv/bin/activate
+# macOS / Linux
+source env/bin/activate
+```
 
+**3. Install dependencies**
+```bash
 pip install -r requirements.txt
 npm install
+```
+
+**4. Set up environment variables**
+
+Create a `.env` file in the project root (see [Environment Variables](#-environment-variables) below).
+
+**5. Create a PostgreSQL database**
+```bash
+createdb event_management
+```
+Or create it manually to match the `NAME`, `USER`, and `PASSWORD` you set in `settings.py` / `.env`.
+
+**6. Run migrations**
+```bash
 python manage.py makemigrations
 python manage.py migrate
-python populate_db.py
+```
 
-**# One-time production build**
+**7. (Optional) Seed some sample data**
+```bash
+python manage.py shell < populate_db.py
+```
+
+**8. Build Tailwind CSS**
+```bash
 npm run build:tailwind
+```
 
-**# Or watch for changes during active development**
-npm run watch:tailwind
+**9. Create a superuser (for the Django admin)**
+```bash
+python manage.py createsuperuser
+```
+
+**10. Run the development server**
+```bash
 python manage.py runserver
+```
 
+Visit **http://127.0.0.1:8000/** in your browser 🎉
 
+---
 
-**🎉 Open your browser and go to http://127.0.0.1:8000/**
+## 🔑 Environment Variables
 
+Create a `.env` file in the project root with the following keys:
 
+```env
+SECRET_KEY=your-django-secret-key
+DEBUG=True
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST=smtp.gmail.com
+EMAIL_USE_TLS=True
+EMAIL_PORT=587
+EMAIL_HOST_USER=your-email@gmail.com
+EMAIL_HOST_PASSWORD=your-email-app-password
+FRONTEND_URL=http://localhost:8000
+```
 
+> ⚠️ **Never commit your real `.env` file.** It's already listed in `.gitignore` — keep it that way.
 
+---
 
+## 📚 What I Learned
+
+Building this project helped me practice:
+- Django's MVT (Model-View-Template) architecture
+- Function-based views vs. class-based views
+- Custom user models & Django's authentication system
+- ModelForms, form validation, and reusable form mixins
+- Many-to-many relationships and `aggregate()` / `Q` queries
+- Integrating Tailwind CSS into a Django project
+- Managing settings/secrets with environment variables
+
+---
+
+## 🗺️ Roadmap / Things to Improve
+
+- [ ] Clean up duplicate/commented-out code (leftover FBV vs CBV experiments)
+- [ ] Add proper role-based permissions (Admin / Organizer / Participant)
+- [ ] Add automated tests
+- [ ] Better error handling and form feedback
+- [ ] Reorganize templates and static files more consistently
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+<div align="center">
+
+Made while learning Django 🚀
+
+</div>

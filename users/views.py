@@ -2,7 +2,6 @@ from django.shortcuts import render,redirect
 from users.forms import RegisterForm,login_form,Changepassword,PasswordResetForm,PasswordResetConfirmForm,EditProfileModelForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.views import LoginView
 from django.views.generic import TemplateView,UpdateView
@@ -10,7 +9,10 @@ from django.views.generic import TemplateView,UpdateView
 from django.contrib.auth.views import PasswordChangeView,PasswordResetView , PasswordResetConfirmView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from users.models import userprofile
+
+from django.contrib.auth import get_user_model
+User=get_user_model()
+
 
 def sign_up(request):
     form=RegisterForm()
@@ -93,8 +95,8 @@ class ProfileView(TemplateView):
         context['name']=user.get_full_name()
         context['member_since']=user.date_joined
         context['last_login']=user.last_login
-        context['bio']=user.userprofile.bio
-        context['profileimage']=user.userprofile.profile
+        context['bio']=user.bio
+        context['profileimage']=user.profile
         return context
 
 
@@ -131,6 +133,7 @@ class PasswordResetConfirmView(PasswordResetConfirmView):
         return super().form_valid(form)
 
 
+""" 
 
 class EditProfileView(UpdateView):
     model=User
@@ -155,4 +158,18 @@ class EditProfileView(UpdateView):
     def form_valid(slef,form):
         form.save(commit=True)
         return redirect('profile')
-    
+
+
+     """
+class EditProfileView(UpdateView):
+    model=User
+    form_class=EditProfileModelForm
+    template_name='account/update_profile.html'
+    context_object_name='form'
+
+    def get_object(self):
+        return self.request.user
+
+    def form_valid(self, form):
+        form.save()
+        return redirect('profile')
