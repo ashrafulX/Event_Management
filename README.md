@@ -29,6 +29,7 @@ The project itself is a simple **Event Management System** where users can creat
 - **Dashboard** — quick stats for total / upcoming / past events and total participants
 - **Upcoming & Past Events** views, plus a **search** feature (search by event name, location, or category)
 - **Custom User Model** with profile picture and bio
+- **Role-Based Access Control** new users are automatically assigned to a User group via Django signals; staff/superusers get access to the Django admin and a separate admin dashboard
 - **Authentication** — sign up, sign in/out, email-based account activation, password reset, and password change
 - **Profile page** — view and edit profile info
 - **Tailwind CSS** for styling (with a `create_category`, `create_participant`, and `create_event` form UI)
