@@ -3,7 +3,7 @@ import re
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,PasswordChangeForm,PasswordResetForm,SetPasswordForm
 from django.contrib.auth.models import User
 from events.forms import styleMixin
-
+from django.contrib.auth.models import User
 class RegisterForm(styleMixin,UserCreationForm):
     email=forms.EmailField()
     class Meta:
@@ -68,3 +68,50 @@ class PasswordResetForm(styleMixin,PasswordResetForm):
 
 class PasswordResetConfirmForm(styleMixin,SetPasswordForm):
     pass
+
+
+class EditProfileModelForm(styleMixin,forms.ModelForm):
+    class Meta:
+        model=User
+        fields=['username','email','first_name','last_name']
+
+    bio=forms.CharField(required=False,widget=forms.Textarea,label='bio')
+    profile=forms.ImageField(required=False,label='Profile Picture')
+
+
+    def __init__(self,*args,**kwargs):
+        self.userprofile = kwargs.pop('userprofile', None)
+        super().__init__(*args,**kwargs)
+
+        #error handle
+
+        if self.userprofile:
+            self.fields['bio'].initial=self.userprofile.bio
+            self.fields['profile'].initial=self.userprofile.profile
+
+    def save(self,commit=True):
+        user=super().save(commit=False)
+
+        if self.userprofile:
+                new_profile = self.cleaned_data.get('profile')
+                old_profile = self.userprofile.profile
+
+        if new_profile:
+            self.userprofile.profile = new_profile
+            self.userprofile.save()
+
+            if old_profile:
+                old_profile.delete(save=False)
+
+            if commit:
+                self.userprofile.save()
+
+        if new_profile and old_profile:
+
+            if old_profile.name != self.userprofile.profile.name:
+                old_profile.delete(save=False)
+
+                if commit:
+                    user.save()
+
+        return user

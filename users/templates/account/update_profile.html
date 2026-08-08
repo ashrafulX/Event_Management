@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <link rel="stylesheet" href="{% static "css/output.css" %}">
+</head>
+<body>
+    {% include "index/nav.html" %}
+    <main class="w-full max-w-lg mx-auto px-4 my-12 flex flex-col">
+    
+    <!-- Interactive Messages Section -->
+    {% if messages %}
+    <div class="w-full flex flex-col gap-3 mb-6">
+        {% for message in messages %}
+        <div class="p-4 rounded-xl text-sm font-semibold flex items-center gap-3 border transition-all duration-300 transform hover:scale-[1.02] shadow-sm 
+            {% if message.tags == 'success' %} bg-green-50 text-green-700 border-green-200 shadow-green-600/10 
+            {% elif message.tags == 'error' %} bg-red-50 text-red-700 border-red-200 shadow-red-600/10 
+            {% elif message.tags == 'warning' %} bg-yellow-50 text-yellow-700 border-yellow-200 shadow-yellow-600/10 
+            {% else %} bg-blue-50 text-blue-700 border-blue-200 shadow-blue-600/10 {% endif %}">
+            
+            <!-- Animated Pulsing Dot -->
+            <span class="flex-shrink-0 w-2.5 h-2.5 rounded-full animate-pulse 
+                {% if message.tags == 'success' %} bg-green-500 
+                {% elif message.tags == 'error' %} bg-red-500 
+                {% elif message.tags == 'warning' %} bg-yellow-500 
+                {% else %} bg-blue-500 {% endif %}"></span>
+            
+            <span class="flex-1">{{ message }}</span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Form Card Container -->
+    <div class="w-full bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+        <h2 class="text-2xl font-black uppercase tracking-wide text-center text-gray-900 mb-6">
+            Update Profile
+        </h2>
+        
+        <form method="POST" enctype="multipart/form-data" class="flex flex-col gap-5">
+            {% csrf_token %}
+            
+            <!-- Django Form Wrapper with Child Selectors & File Input Styling -->
+            <div class="w-full 
+                [&_label]:block [&_label]:mb-1.5 [&_label]:text-sm [&_label]:font-bold [&_label]:text-gray-700 
+                
+                /* Standard Inputs */
+                [&_input:not([type=file])]:w-full [&_input:not([type=file])]:px-4 [&_input:not([type=file])]:py-3 
+                [&_input:not([type=file])]:border [&_input:not([type=file])]:border-gray-300 
+                [&_input:not([type=file])]:rounded-lg [&_input:not([type=file])]:text-gray-800 
+                [&_input:not([type=file])]:focus:ring-2 [&_input:not([type=file])]:focus:ring-blue-500 
+                [&_input:not([type=file])]:focus:border-blue-500 [&_input:not([type=file])]:outline-none 
+                [&_input:not([type=file])]:transition-all [&_input:not([type=file])]:shadow-sm
+                
+                /* File Input (e.g., Profile Picture) */
+                [&_input[type=file]]:block [&_input[type=file]]:w-full [&_input[type=file]]:text-sm [&_input[type=file]]:text-gray-500
+                [&_input[type=file]]:file:mr-4 [&_input[type=file]]:file:py-2 [&_input[type=file]]:file:px-4
+                [&_input[type=file]]:file:rounded-lg [&_input[type=file]]:file:border-0
+                [&_input[type=file]]:file:text-sm [&_input[type=file]]:file:font-semibold
+                [&_input[type=file]]:file:bg-blue-50 [&_input[type=file]]:file:text-blue-700
+                hover:[&_input[type=file]]:file:bg-blue-100 [&_input[type=file]]:file:transition-colors">
+                
+                {{ form }}
+            </div>
+
+            <button class="mt-4 w-full bg-blue-600 hover:bg-blue-700 transition-colors duration-200 text-white font-bold py-3 px-4 rounded-lg shadow-md" type="submit">
+                Update Profile
+            </button>
+        </form>
+    </div>
+    
+</main>
+</body>
+</html>

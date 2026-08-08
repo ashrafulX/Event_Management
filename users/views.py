@@ -1,14 +1,16 @@
 from django.shortcuts import render,redirect
-from users.forms import RegisterForm,login_form,Changepassword,PasswordResetForm,PasswordResetConfirmForm
+from users.forms import RegisterForm,login_form,Changepassword,PasswordResetForm,PasswordResetConfirmForm,EditProfileModelForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.views import LoginView
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView,UpdateView
+
 from django.contrib.auth.views import PasswordChangeView,PasswordResetView , PasswordResetConfirmView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from users.models import userprofile
 
 def sign_up(request):
     form=RegisterForm()
@@ -91,6 +93,8 @@ class ProfileView(TemplateView):
         context['name']=user.get_full_name()
         context['member_since']=user.date_joined
         context['last_login']=user.last_login
+        context['bio']=user.userprofile.bio
+        context['profileimage']=user.userprofile.profile
         return context
 
 
@@ -125,3 +129,30 @@ class PasswordResetConfirmView(PasswordResetConfirmView):
     def form_valid(self, form):
         messages.success(self.request,'Password Reset Succesfully')
         return super().form_valid(form)
+
+
+
+class EditProfileView(UpdateView):
+    model=User
+    form_class=EditProfileModelForm
+    template_name='account/update_profile.html'
+    context_object_name='form'
+
+    def get_object(self):
+        return self.request.user
+
+    def get_form_kwargs(self):
+        kwargs=super().get_form_kwargs()
+        kwargs['userprofile']=userprofile.objects.get(user=self.request.user)
+        return kwargs
+
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        user_profile=userprofile.objects.get(user=self.request.user)
+        context['form']=self.form_class(instance=self.object,userprofile=user_profile)
+        return context
+
+    def form_valid(slef,form):
+        form.save(commit=True)
+        return redirect('profile')
+    
