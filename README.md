@@ -4,10 +4,10 @@
 
 **A Django learning project — built while learning Django from scratch**
 
-![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12.3-blue?style=for-the-badge&logo=python&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-6.0-092E20?style=for-the-badge&logo=django&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3.4.19-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -40,7 +40,7 @@ The project itself is a simple **Event Management System** where users can creat
 
 | Layer | Technology |
 | :--- | :--- |
-| **Language** | Python 3 |
+| **Language** | Python 3.12.3 |
 | **Framework** | Django 6.0.5 |
 | **Database** | PostgreSQL |
 | **Frontend** | HTML5, Tailwind CSS |
@@ -176,13 +176,13 @@ Building this project helped me practice:
 
 ---
 
-## 🗺️ Roadmap / Things to Improve
+<!-- ## 🗺️ Roadmap / Things to Improve
 
 - [ ] Clean up duplicate/commented-out code (leftover FBV vs CBV experiments)
 - [ ] Add proper role-based permissions (Admin / Organizer / Participant)
 - [ ] Add automated tests
 - [ ] Better error handling and form feedback
-- [ ] Reorganize templates and static files more consistently
+- [ ] Reorganize templates and static files more consistently -->
 
 ---
 
